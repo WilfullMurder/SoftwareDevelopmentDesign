@@ -1,0 +1,6 @@
+name=Eleanor=surname=Gaddesden=UoB=06327975=role=Treasurer=year=2021
+name=Yaa=surname=Ainscough=UoB=05492587=role=etc.=year=2021
+name=Portia=surname=Radmoore=UoB=66497993=role=Treasurer=year=2021
+name=Giselle=surname=Nokes=UoB=59760518=role=Treasurer=year=2021
+name=Rabi=surname=Zacksfield=UoB=75506721=role=Treasurer=year=2021
+name=Paavani=surname=Pedwardine=UoB=28548651=role=Secretary=year=2021

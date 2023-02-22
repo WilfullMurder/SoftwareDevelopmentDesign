@@ -1,0 +1,12 @@
+name=Alicia=surname=Eabry=UoB=70713327=role=etc.=year=2023
+name=Alicia=surname=Edkyns=UoB=57572780=role=etc.=year=2023
+name=Udaya=surname=Newf=UoB=37537253=role=Treasurer=year=2023
+name=Labdhi=surname=Yapp=UoB=92539286=role=Treasurer=year=2023
+name=Odetta=surname=Nokes=UoB=44990310=role=Treasurer=year=2023
+name=Taa=surname=Jack=UoB=00357711=role=etc.=year=2023
+name=Yaa=surname=Shiloo=UoB=09940402=role=Treasurer=year=2023
+name=Fanny=surname=Fernihaugh=UoB=12996370=role=Secretary=year=2023
+name=Ives=surname=Haide=UoB=06798536=role=Secretary=year=2023
+name=Muriel=surname=Uvedale=UoB=49886359=role=Secretary=year=2023
+name=Sa=surname=Yair=UoB=19391756=role=Secretary=year=2023
+name=Xalbadora=surname=Udal=UoB=91423828=role=etc.=year=2023

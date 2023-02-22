@@ -1,0 +1,12 @@
+name=Harmony=surname=Gimblet=UoB=80476851=role=Treasurer=year=2022
+name=Nicolette=surname=Van Engers=UoB=25646258=role=Treasurer=year=2022
+name=Odetta=surname=Saban=UoB=48052695=role=Treasurer=year=2022
+name=Usagi=surname=O'Donnchadha=UoB=67615106=role=etc.=year=2022
+name=Qianna=surname=Tabourdeaux=UoB=09275966=role=etc.=year=2022
+name=Rieko=surname=Treagust=UoB=02053003=role=Secretary=year=2022
+name=Gail=surname=Caffyn=UoB=88084251=role=Treasurer=year=2022
+name=Ealasidde=surname=Scantelberry=UoB=89268225=role=etc.=year=2022
+name=Gail=surname=Al-Qanawati=UoB=96243693=role=etc.=year=2022
+name=Portia=surname=Jupp=UoB=12833498=role=etc.=year=2022
+name=Uberta=surname=Beesly=UoB=48500044=role=Secretary=year=2022
+name=Eleanor=surname=Orgle=UoB=79744556=role=etc.=year=2022

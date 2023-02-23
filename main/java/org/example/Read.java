@@ -50,7 +50,7 @@ public class Read
                 {
                     data.add(s);
                 }
-            }
+            } reader.close();
         } catch(IOException e)
         {
             e.printStackTrace();

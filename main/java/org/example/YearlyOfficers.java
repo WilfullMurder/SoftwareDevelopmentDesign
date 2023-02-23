@@ -21,6 +21,7 @@ public class YearlyOfficers
     private final String SUFFIX = ".txt";
     private int studentCount;
     private String fileName;
+    private ArrayList<Student> studentsData = new ArrayList<>();
     private DataGenerator dataGenerator = new DataGenerator();
     private Write write = new Write();
     private Read read = new  Read();
@@ -55,7 +56,6 @@ public class YearlyOfficers
 
     public void run()
     {
-        write.writeDataToFile(getFilePath(this.fileName), dataGenerator.generateData(this.studentCount));
         openFiles(this.fileName);
     }
 
@@ -82,19 +82,24 @@ public class YearlyOfficers
      */
     private void openFiles(String filename)
     {
-        //opens the initial file "awc.txt"
-        //pulls data from file into list
-        ArrayList<Student> students = read.ReadFileData(getFilePath(filename));
+        //opens and writes to the initial file "awc.txt"
+        write.writeDataToFile(getFilePath(fileName), dataGenerator.generateData(this.studentCount));
+
+        //pulls data from file into list and closes files
+        this.studentsData = read.ReadFileData(getFilePath(filename));
 
         System.out.println("beginning separation...");
-        Instant start = Instant.now();
-        //initialises student lists by year
-        ArrayList<Student> year21 = separateOfficers(students, "2021");
-        ArrayList<Student> year22 = separateOfficers(students, "2022");
-        ArrayList<Student> year23 = separateOfficers(students, "2023");
-        Instant end = Instant.now();
-        Long gap = ChronoUnit.MILLIS.between(start, end);
+        Instant current = Instant.now();
+        //initialises, declares and fills student lists by year
+        ArrayList<Student> year21 = separateOfficers(this.studentsData, "2021");
+        ArrayList<Student> year22 = separateOfficers(this.studentsData, "2022");
+        ArrayList<Student> year23 = separateOfficers(this.studentsData, "2023");
+
+        Instant previous = current;
+        current = Instant.now();
+        Long gap = ChronoUnit.MILLIS.between(previous, current);
         System.out.println("Time taken for separation: " + gap + " ms");
+
         closeFiles(year21, PREFIX+YEARS[0]+SUFFIX);
         closeFiles(year22, PREFIX+YEARS[1]+SUFFIX);
         closeFiles(year23, PREFIX+YEARS[2]+SUFFIX);
@@ -104,32 +109,27 @@ public class YearlyOfficers
     private ArrayList<Student> separateOfficers(ArrayList<Student> studentArrayList, String year)
     {
         System.out.println("Sorting by year: " + year);
-        Instant start = Instant.now();
-        ArrayList<Student> list = new ArrayList<>();
+        Instant current = Instant.now();
+        
+        ArrayList<Student> thisYearsList = new ArrayList<>();
+
         for(int i = 0; i < studentArrayList.size(); i++)
         {
             if(studentArrayList.get(i).getYear().equals(year)) {
-                list.add(studentArrayList.get(i));
+                thisYearsList.add(studentArrayList.get(i));
             }
         }
+        //clear any matches so we don't loop again
+        this.studentsData.removeAll(thisYearsList);
 
-        for(int i = 0; i < list.size(); i++)
-        {
-            for(int j = 0; j< studentArrayList.size(); j++)
-            {
-                //if we have a match remove to avoid rechecking in later loops
-                if(list.get(i) == studentArrayList.get(j))
-                {
-                    studentArrayList.remove(j);
-                    break;
-                }
-            }
 
-        }
-        Instant end = Instant.now();
-        Long gap = ChronoUnit.MILLIS.between(start, end);
+
+        Instant previous = current;
+        current = Instant.now();
+        Long gap = ChronoUnit.MILLIS.between(previous, current);
         System.out.println("Time taken for sorting: " + gap + " ms");
-        return list;
+
+        return thisYearsList;
     }
 
     private void closeFiles(ArrayList<Student> data, String filePath)

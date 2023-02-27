@@ -21,12 +21,17 @@ public class YearlyOfficers
     private final String SUFFIX = ".txt";
     private int studentCount;
     private String fileName;
+    private String keyFolder;
     private ArrayList<Student> studentsData = new ArrayList<>();
     private DataGenerator dataGenerator = new DataGenerator();
     private Write write = new Write();
     private Read read = new  Read();
 
 
+    public YearlyOfficers()
+    {
+
+    }
 
     /**
      * WARNING!
@@ -36,11 +41,17 @@ public class YearlyOfficers
      * @param filename name of initial file
      * @param count number of students in initial file
      */
-    public YearlyOfficers(String filename, int count)
+    public YearlyOfficers(String filename, String keyFolder, int count)
     {
         if(filename.isEmpty() || filename == null)
         {
             emptyFileName();
+            return;
+        }
+
+        if(keyFolder.isEmpty() || keyFolder == null)
+        {
+           System.out.println("Key folder is empty or null!");
             return;
         }
 
@@ -51,24 +62,28 @@ public class YearlyOfficers
         }
 
         this.fileName = filename;
+        this.keyFolder = keyFolder;
         this.studentCount = count;
     }
 
     public void run()
     {
-        openFiles(this.fileName);
+        openFiles(this.fileName, this.keyFolder);
     }
 
     /**
      * get absolute path of project and append with file name
      * @param filename name of file
+     * @param keyFolder Main or Test folder
      * @return absolute path of file
      */
-    private String getFilePath(String filename)
+    private String getFilePath(String filename, String keyFolder)
     {
         Path p = Paths.get("");
         String s = p.toAbsolutePath().toString();
-        s+= "\\src\\main\\java\\org\\example\\";
+        s+= "\\src\\";
+        s+= keyFolder;
+        s+= "\\java\\org\\example\\";
         s+=filename;
         return s;
     }
@@ -80,29 +95,36 @@ public class YearlyOfficers
      *
      * @param filename
      */
-    private void openFiles(String filename)
+    private void openFiles(String filename,  String keyFolder)
     {
         //opens and writes to the initial file "awc.txt"
-        write.writeDataToFile(getFilePath(fileName), dataGenerator.generateData(this.studentCount));
+        write.writeDataToFile(getFilePath(fileName, keyFolder), dataGenerator.generateData(this.studentCount));
 
         //pulls data from file into list and closes files
-        this.studentsData = read.ReadFileData(getFilePath(filename));
+        this.studentsData = read.ReadFileData(getFilePath(filename, keyFolder));
 
         System.out.println("beginning separation...");
         Instant current = Instant.now();
         //initialises, declares and fills student lists by year
-        ArrayList<Student> year21 = separateOfficers(this.studentsData, "2021");
-        ArrayList<Student> year22 = separateOfficers(this.studentsData, "2022");
-        ArrayList<Student> year23 = separateOfficers(this.studentsData, "2023");
+        ArrayList<Student> year21 = separateOfficers(this.studentsData, "21");
+        ArrayList<Student> year22 = separateOfficers(this.studentsData, "22");
+        ArrayList<Student> year23 = separateOfficers(this.studentsData, "23");
 
         Instant previous = current;
         current = Instant.now();
         Long gap = ChronoUnit.MILLIS.between(previous, current);
         System.out.println("Time taken for separation: " + gap + " ms");
 
-        closeFiles(year21, PREFIX+YEARS[0]+SUFFIX);
-        closeFiles(year22, PREFIX+YEARS[1]+SUFFIX);
-        closeFiles(year23, PREFIX+YEARS[2]+SUFFIX);
+        int start =0, end =0;
+        end = this.fileName.length() - 4;
+
+        String y21 = this.fileName.substring(start, end) +YEARS[0]+SUFFIX;
+        String y22 = this.fileName.substring(start, end) +YEARS[1]+SUFFIX;
+        String y23 = this.fileName.substring(start, end) +YEARS[2]+SUFFIX;
+
+        closeFiles(year21, y21, this.keyFolder);
+        closeFiles(year22, y22, this.keyFolder);
+        closeFiles(year23, y23, this.keyFolder);
 
     }
 
@@ -110,18 +132,19 @@ public class YearlyOfficers
     {
         System.out.println("Sorting by year: " + year);
         Instant current = Instant.now();
-        
+
+
         ArrayList<Student> thisYearsList = new ArrayList<>();
 
         for(int i = 0; i < studentArrayList.size(); i++)
         {
-            if(studentArrayList.get(i).getYear().equals(year)) {
+                String check = studentArrayList.get(i).getUoB().substring(0,2);
+            if(check.equals(year)) {
                 thisYearsList.add(studentArrayList.get(i));
             }
         }
         //clear any matches so we don't loop again
         this.studentsData.removeAll(thisYearsList);
-
 
 
         Instant previous = current;
@@ -132,10 +155,10 @@ public class YearlyOfficers
         return thisYearsList;
     }
 
-    private void closeFiles(ArrayList<Student> data, String filePath)
+    private void closeFiles(ArrayList<Student> data, String filePath,  String keyFolder)
     {
         System.out.println("Total students year " + data.get(0).getYear() + " : " + data.size());
-        write.writeDataToFile(getFilePath(filePath), data);
+        write.writeDataToFile(getFilePath(filePath, keyFolder), data);
         data.clear();
     }
 
@@ -149,4 +172,12 @@ public class YearlyOfficers
         System.out.println("error! count: " + count + " too low!" );
     }
 
+    public String getFileName()
+    {
+        return this.fileName;
+    }
+
+    public int getStudentCount() {
+        return this.studentCount;
+    }
 }

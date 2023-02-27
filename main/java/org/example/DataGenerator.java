@@ -3,6 +3,7 @@ package org.example;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 /***WARNING!WARNING!WARNING!WARNING!WARNING!WARNING!WARNING!***/
@@ -28,7 +29,6 @@ public class DataGenerator
             "Wackinshaw","Weinister","Wharfer","Wilderspine", "Yair","Yapp","Yearker","Yoxal", "Zacksfield","Zealand","Zehender","Zionzee",};
 
     private final String[] ROLES = new String[] {"Treasurer", "Secretary", "etc."};
-    private final int[] YEARS = new int[] {2021, 2022, 2023};
     private Random random = new Random();
 
     /**
@@ -38,13 +38,29 @@ public class DataGenerator
      */
     public ArrayList<Student> generateData(int count)
     {
-
         ArrayList<Student> students = new ArrayList<>();
+
+
         Instant start = Instant.now();
         for(int i =0; i < count; i++)
         {
-            students.add(new Student(getGivenName(),getSurname(),generateUB(),getRole(),getYear()));
+
+            Student s = new Student(getGivenName(),getSurname(),generateUB(),getRole());
+            if(i < 2)
+            {
+                s.setYear("21");
+            }
+            if(i >= 2 && i < 4)
+            {
+                s.setYear("22");
+            }
+            if(i >= 4 && i < 6)
+            {
+                s.setYear("23");
+            }
+            students.add(s);
         }
+
         System.out.println("Total students generated: " + students.size());
         Instant end = Instant.now();
         Long gap = ChronoUnit.MILLIS.between(start, end);
@@ -66,17 +82,27 @@ public class DataGenerator
     {
         return this.ROLES[random.nextInt(ROLES.length)];
     }
-    private String getYear()
-    {
-        return Integer.toString(this.YEARS[random.nextInt(YEARS.length)]);
-    }
+
 
     private String generateUB()
     {
         String s = "";
         for(int i  = 0; i < 8; i++)
         {
-            s += Integer.toString(random.nextInt(10));
+            if(i == 0)
+            {
+                s += "2";
+            }
+            else if(i==1)
+            {
+                //generate random number between 1 and 3
+                s += Integer.toString(1 + random.nextInt(3));
+            }
+            else
+            {
+                s += Integer.toString(random.nextInt(10));
+            }
+
         }
         return s;
     }

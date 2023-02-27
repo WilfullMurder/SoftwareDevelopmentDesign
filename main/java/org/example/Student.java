@@ -8,9 +8,13 @@ public class Student
     private String surname;
     private String UoB;
     private String role;
-    private String year;
 
-    public Student(String givenName, String surname, String ub, String role, String year)
+    public Student()
+    {
+
+    }
+
+    public Student(String givenName, String surname, String ub, String role)
     {
         this.givenName = givenName;
         this.surname = surname;
@@ -26,15 +30,6 @@ public class Student
         this.UoB = ub;
         this.role = role;
 
-        if(year.length() != 4)
-        {
-            System.out.println("Error! Year: " + year + " incorrect format!");
-            return;
-        }
-        else
-        {
-            this.year = year;
-        }
     }
 
     @Override
@@ -44,16 +39,14 @@ public class Student
                 ", surname='" + surname + '\'' +
                 ", UoB='" + UoB + '\'' +
                 ", role='" + role + '\'' +
-                ", year='" + year + '\'' +
                 '}';
     }
 
     public String parse() {
-        return "name=" + givenName +
-                "=surname=" + surname +
-                "=UoB=" + UoB  +
-                "=role=" + role  +
-                "=year=" + year;
+        return "name," + givenName +
+                ",surname," + surname +
+                ",UoB," + UoB  +
+                ",role," + role;
     }
 
 
@@ -73,8 +66,16 @@ public class Student
     {
         return this.role;
     }
-
-    public String getYear() {
-        return year;
+    public String getYear()
+    {
+        return this.getUoB().substring(0,2);
     }
+
+    public void setYear(String newYear)
+    {
+        String sub1 = this.UoB.substring(2);
+        this.UoB = newYear += sub1;
+
+    }
+
 }

@@ -14,8 +14,8 @@ public class Main {
         Instant previous = null, current;
         Long gap;
         current = Instant.now();
-        int studentCount = 300;
-        YearlyOfficers yo = new YearlyOfficers("awc.txt", studentCount);
+        int studentCount = 30;
+        YearlyOfficers yo = new YearlyOfficers("awc.txt", "main", studentCount);
         yo.run();
 
         previous = current;

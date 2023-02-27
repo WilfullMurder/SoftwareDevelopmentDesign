@@ -37,14 +37,14 @@ public class Read
                  *                 "=role=" + role  +
                  *                 "=year=" + year;
                  */
-                words = line.split("=");
+                words = line.split(",");
 
                 /**
                  * Format is essentially key:value pair in array format.
                  * ipso facto each element at an odd index is a value, stored in order of requirement
                  * i.e. words[0] = "name", words[1] = givenName;
                  */
-                Student s = new Student(words[1], words[3], words[5], words[7], words[9]);
+                Student s = new Student(words[1], words[3], words[5], words[7]);
 
                 if(!data.contains(s))
                 {
